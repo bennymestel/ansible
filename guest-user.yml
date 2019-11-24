@@ -1,0 +1,14 @@
+---
+
+  - name : Add user 'guest'
+    hosts: all
+    tasks:
+    - name: creates a user
+      user:
+        name: guest
+        uid: 1111
+        shell: /bin/bash
+        groups: users
+        password: '$6$cjTt3wOKur/Kit.Q$EpAy46fw9PYeFdjfdOT6tDfzgaQcs1g7fGF1CQTXqqAxGh9APT6rUWa2G5xfyeu/pzjAVARAYVHevrcVB4CRm/'
+        state: present
+

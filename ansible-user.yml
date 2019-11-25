@@ -1,25 +1,15 @@
-- name: Creates an 'ansible' user with sudo privileges
-  hosts: all
-  tasks:
-  - name: Make sure we have a 'wheel' group
-    group:
-      name: wheel
-      state: present
 
-  - name: Allow 'wheel' group to have passwordless sudo
-    lineinfile:
-      dest: /etc/sudoers
-      state: present
-      regexp: '^%wheel'
-      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-      validate: 'visudo -cf %s'
-
-  - name: Add sudoers users to wheel group
-    user: name=ansible groups=wheel append=yes state=present createhome=yes
-
-  - authorized_key: 
-      user: ansible
-      state: present
-      manage_dir: yes
-      key: "{{ lookup('file', '/home/benny/.ssh/id_rsa.pub') }}"
-
+  - name: Create Ansible user and give it sudo privileges
+    hosts: all
+    tasks:
+      - name: Create Ansible user
+        user:
+          name: ansible
+          comment: user for Ansible deployments
+       
+      - name: Add Ansible user to sudoers file
+        lineinfile:
+          path: /etc/sudoers
+          line: ansible       ALL=(ALL)       ALL
+          insertafter: root  *
+        

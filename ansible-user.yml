@@ -10,6 +10,6 @@
       - name: Add Ansible user to sudoers file
         lineinfile:
           path: /etc/sudoers
-          line: ansible       ALL=(ALL)       ALL
+          line: ansible       ALL=(ALL)       NOPASSWD: ALL
           insertafter: root  *
         
